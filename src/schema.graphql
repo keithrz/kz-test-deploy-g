@@ -1,0 +1,45 @@
+scalar DateTime
+
+type Recipe {
+    id: ID!
+    name: String!
+    category: String
+    numberOfServings: String
+    ingredients: [String!]!
+    instructions: [String!]!
+    dateCreated: DateTime!
+    dateModified: DateTime
+    notes: String
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    superuser: Boolean!
+}
+
+type SuccessMessage {
+    message: String
+}
+
+type Query {
+    recipes(searchTerm: String): [Recipe]!
+    recipe(id: ID!): Recipe
+    users: [User]!
+    userById(id: ID!): User
+    userByEmail(email: String!): User
+    whoAmI: User
+}
+
+type Mutation {
+    addRecipe(name: String!, category: String, numberOfServings: String, ingredients: [String!]!, instructions: [String!]!, notes: String): Recipe!
+    editRecipe(id: ID!, name: String!, category: String, numberOfServings: String, ingredients: [String!]!, instructions: [String!]!, notes: String): Recipe!
+    deleteRecipe(id: ID!): SuccessMessage
+    importRecipeFromUrl(url: String!): Recipe
+    createUser(email: String!, password: String!, name: String!, signupCode: String!): User!
+    signin(email: String!, password: String!): User!
+    signout: SuccessMessage
+    requestReset(email: String!): SuccessMessage
+    resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
+}
